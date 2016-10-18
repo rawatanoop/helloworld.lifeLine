@@ -4,9 +4,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
 
 import lifeLine.orm.entity.DonationCamp;
@@ -33,13 +36,16 @@ public class DonationCampDao {
   }
   
   @SuppressWarnings("unchecked")
-  public List<DonationCamp> getAll() {
-    return getSession().createQuery("from DonationCamp").list();
+  public List<DonationCamp> getAll() {    
+	  return getSession().createQuery("from DonationCamp").list();
   }
  
-
-  public DonationCamp getById(int id) {
-    return (DonationCamp) getSession().load(DonationCamp.class, id);
+  @Transactional
+  public DonationCamp getById(Integer id) {
+	  DonationCamp camp = (DonationCamp) getSession().load(DonationCamp.class, id);
+	  camp.getUnit();
+	  camp.getAddress();
+    return camp;
   }
 
   public void update(DonationCamp camp) {

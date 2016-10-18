@@ -36,8 +36,8 @@ public class DonationCampService {
 	    return "User succesfully saved!";
 	  }
 
-	public void getByID(int id) {
-		dcDao.getById(id);
+	public DonationCamp getByID(int id) {
+		return dcDao.getById(id);
 		
 	}
 
