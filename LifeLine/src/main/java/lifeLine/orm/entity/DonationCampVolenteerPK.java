@@ -1,0 +1,83 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package lifeLine.orm.entity;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+
+/**
+ *
+ * @author anoop
+ */
+@Embeddable
+public class DonationCampVolenteerPK implements Serializable {
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "User_ID")
+    private int userID;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "Camp_ID")
+    private int campID;
+
+    public DonationCampVolenteerPK() {
+    }
+
+    public DonationCampVolenteerPK(int userID, int campID) {
+        this.userID = userID;
+        this.campID = campID;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getCampID() {
+        return campID;
+    }
+
+    public void setCampID(int campID) {
+        this.campID = campID;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (int) userID;
+        hash += (int) campID;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof DonationCampVolenteerPK)) {
+            return false;
+        }
+        DonationCampVolenteerPK other = (DonationCampVolenteerPK) object;
+        if (this.userID != other.userID) {
+            return false;
+        }
+        if (this.campID != other.campID) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Entity.DonationCampVolenteerPK[ userID=" + userID + ", campID=" + campID + " ]";
+    }
+    
+}
