@@ -7,6 +7,7 @@ package lifeLine.orm.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,12 +22,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.hibernate.annotations.Proxy;
 import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  *
  * @author anoop
  */
+@Proxy(lazy = false)
 @Entity
 @Table(name = "Donation_Camp")
 @XmlRootElement
@@ -35,6 +38,7 @@ import org.springframework.format.annotation.DateTimeFormat;
     , @NamedQuery(name = "DonationCamp.findById", query = "SELECT d FROM DonationCamp d WHERE d.id = :id")
     , @NamedQuery(name = "DonationCamp.findByUserID", query = "SELECT d FROM DonationCamp d WHERE d.userID = :userID")
     , @NamedQuery(name = "DonationCamp.findByCampCategoryID", query = "SELECT d FROM DonationCamp d WHERE d.campCategoryID = :campCategoryID")
+    , @NamedQuery(name = "DonationCamp.findByAddress", query = "SELECT d FROM DonationCamp d WHERE d.address = :address")
     , @NamedQuery(name = "DonationCamp.findByStartDate", query = "SELECT d FROM DonationCamp d WHERE d.startDate = :startDate")
     , @NamedQuery(name = "DonationCamp.findByEndDate", query = "SELECT d FROM DonationCamp d WHERE d.endDate = :endDate")
     , @NamedQuery(name = "DonationCamp.findByUnit", query = "SELECT d FROM DonationCamp d WHERE d.unit = :unit")

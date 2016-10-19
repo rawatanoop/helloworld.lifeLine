@@ -1,8 +1,6 @@
 package lifeLine.model;
 
-import java.util.Date;
-
-public class DonationCampVolunteerModel {
+public class VolunteerModel {
 	private int userID;
 	private int campID;
 	private String 	requestStatus;

@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.annotations.Proxy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
 
 import lifeLine.orm.entity.DonationCamp;
@@ -52,5 +49,14 @@ public class DonationCampDao {
     getSession().update(camp);
     return;
   }
+
+public List<DonationCamp> getByAddress(String address) {
+	@SuppressWarnings("unchecked")
+	List<DonationCamp> camps = (List<DonationCamp>) getSession()
+			.getNamedQuery("DonationCamp.findByAddress").setString("address", address).list();
+	return camps;
+}
+
+
 
 }

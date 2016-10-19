@@ -8,11 +8,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import lifeLine.orm.entity.User;
 
 @Repository
 @Transactional
-public class UserDao {
+public class UserDao implements IUserDao<User>{
   
   @Autowired
   private SessionFactory _sessionFactory;
@@ -32,19 +33,21 @@ public class UserDao {
   }
   
   @SuppressWarnings("unchecked")
-public List<User> getAllUsers() {    
+public List<User> getAll() {    
 	  return getSession().createQuery("from User").list();
   }
-  
-  @Transactional
+
   public User getById(Integer userID) {
 	  User user = (User) getSession().load(User.class, userID);
-    return user;
+	  if(user.getId()==userID)
+		  return user;
+	  return null;
   }
 
   public void update(int userID,User user) {
     getSession().update(user);
     return;
   }
+
 
 }

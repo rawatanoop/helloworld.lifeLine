@@ -2,16 +2,11 @@ package lifeLine.controller;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.orm.hibernate4.HibernateObjectRetrievalFailureException;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import lifeLine.model.DonationCampModel;
-import lifeLine.model.DonationCampVolunteerModel;
-import lifeLine.orm.entity.DonationCamp;
+import lifeLine.model.VolunteerModel;
 import lifeLine.service.DonationCampService;
-import lifeLine.service.DonationCampVolunteerService;
+import lifeLine.service.VolunteerService;
 
 @Controller
 @RequestMapping(value="/donationCampVolunteer")
 @ComponentScan("lifeLine.service")
-public class DonationCampVolunteerController {
+public class VolunteerController {
 
 	  @Autowired
-	  private DonationCampVolunteerService dcVolunteerService;
+	  private VolunteerService dcVolunteerService;
 	  
 	  @Autowired
 	  private DonationCampService dcService;
@@ -62,7 +56,7 @@ public class DonationCampVolunteerController {
 	  @RequestMapping(value="/save",method = RequestMethod.POST)
 	  @ResponseBody
 	  @ResponseStatus(HttpStatus.CREATED)
-	  public String create(@RequestBody DonationCampVolunteerModel camp) {
+	  public String create(@RequestBody VolunteerModel camp) {
 	      dcVolunteerService.create(camp);
 	    return "User succesfully saved!";
 	  }
@@ -70,14 +64,14 @@ public class DonationCampVolunteerController {
 	  @RequestMapping(value="/update/{id}",method = RequestMethod.PATCH)
 	  @ResponseBody
 	  @ResponseStatus(HttpStatus.CREATED)
-	  public String update(@PathVariable("id") int id,@RequestBody DonationCampVolunteerModel camp) {
+	  public String update(@PathVariable("id") int id,@RequestBody VolunteerModel camp) {
 	      dcVolunteerService.update(id,camp);
 	    return "User succesfully updated!";
 	  }
 	  
 	  @RequestMapping(value="/myCamps")
 	  @ResponseBody
-	  public List<DonationCampVolunteerModel> getByUSerID() {
+	  public List<VolunteerModel> getByUSerID() {
 		  int userID = 1;
 	      return dcVolunteerService.getByUserID(userID);
 	  }
