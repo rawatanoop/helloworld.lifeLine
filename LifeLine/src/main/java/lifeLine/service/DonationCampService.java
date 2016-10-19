@@ -1,10 +1,12 @@
 package lifeLine.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import lifeLine.dao.DonationCampDao;
+import lifeLine.model.DonationCampModel;
 import lifeLine.orm.entity.DonationCamp;
 
 @Service
@@ -25,10 +27,13 @@ public class DonationCampService {
 	    return "User succesfully deleted!";
 	  }
 
-	  public String create() {
+	  public String create(DonationCampModel campModel) {
 	    try {
-	    	DonationCamp user = new DonationCamp();
-	      dcDao.save(user);
+	    	DonationCamp camp = new DonationCamp(campModel.getId(),campModel.getUserID(),
+	    			campModel.getCampCategoryID(),campModel.getAddress(),new Date(campModel.getStartDate()),
+	    			new Date(campModel.getEndDate()),campModel.getUnit(),campModel.getUnitLeft());
+	    			
+	      dcDao.save(camp);
 	    }
 	    catch(Exception ex) {
 	      return ex.getMessage();
@@ -44,6 +49,14 @@ public class DonationCampService {
 	public List<DonationCamp> getAll() {
 		
 		return dcDao.getAll();
+		
+	}
+
+	public void update(int id, DonationCampModel campModel) {
+		DonationCamp camp = new DonationCamp(campModel.getId(),campModel.getUserID(),
+    			campModel.getCampCategoryID(),campModel.getAddress(),new Date(campModel.getStartDate()),
+    			new Date(campModel.getEndDate()),campModel.getUnit(),campModel.getUnitLeft());
+		dcDao.update(id,camp);
 		
 	}
 

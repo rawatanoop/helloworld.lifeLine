@@ -48,7 +48,7 @@ public class DonationCampDao {
     return camp;
   }
 
-  public void update(DonationCamp camp) {
+  public void update(int id,DonationCamp camp) {
     getSession().update(camp);
     return;
   }
