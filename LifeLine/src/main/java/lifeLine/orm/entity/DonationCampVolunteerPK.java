@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
  * @author anoop
  */
 @Embeddable
-public class DonationCampVolenteerPK implements Serializable {
+public class DonationCampVolunteerPK implements Serializable {
 
     @Basic(optional = false)
     @NotNull
@@ -27,10 +27,10 @@ public class DonationCampVolenteerPK implements Serializable {
     @Column(name = "Camp_ID")
     private int campID;
 
-    public DonationCampVolenteerPK() {
+    public DonationCampVolunteerPK() {
     }
 
-    public DonationCampVolenteerPK(int userID, int campID) {
+    public DonationCampVolunteerPK(int userID, int campID) {
         this.userID = userID;
         this.campID = campID;
     }
@@ -62,10 +62,10 @@ public class DonationCampVolenteerPK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DonationCampVolenteerPK)) {
+        if (!(object instanceof DonationCampVolunteerPK)) {
             return false;
         }
-        DonationCampVolenteerPK other = (DonationCampVolenteerPK) object;
+        DonationCampVolunteerPK other = (DonationCampVolunteerPK) object;
         if (this.userID != other.userID) {
             return false;
         }
@@ -77,7 +77,7 @@ public class DonationCampVolenteerPK implements Serializable {
 
     @Override
     public String toString() {
-        return "Entity.DonationCampVolenteerPK[ userID=" + userID + ", campID=" + campID + " ]";
+        return "Entity.DonationCampVolunteerPK[ userID=" + userID + ", campID=" + campID + " ]";
     }
     
 }

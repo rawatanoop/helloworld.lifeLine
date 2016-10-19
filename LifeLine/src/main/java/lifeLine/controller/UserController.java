@@ -18,23 +18,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import lifeLine.model.DonationCampModel;
-import lifeLine.orm.entity.DonationCamp;
-import lifeLine.service.DonationCampService;
+import lifeLine.model.UserModel;
+import lifeLine.service.UserService;
 
 @Controller
-@RequestMapping(value="/donationCamp")
+@RequestMapping(value="/user")
 @ComponentScan("lifeLine.service")
-public class DonationCampController {
+public class UserController {
 
   @Autowired
-  private DonationCampService dcService;
+  private UserService userService;
   
   @RequestMapping(value="/delete/{id}",method = RequestMethod.DELETE)
   @ResponseBody
   public String delete(@PathVariable("id") int id) {
     try {
-      dcService.delete(id);
+      userService.delete(id);
     }
     catch(Exception ex) {
       return ex.getMessage();
@@ -44,11 +43,11 @@ public class DonationCampController {
   
 @RequestMapping(value="/{id}",method = RequestMethod.GET)
   @ResponseBody
-  public ResponseEntity<DonationCampModel> getByID(@PathVariable("id") int id) throws Exception {
+  public ResponseEntity<UserModel> getByID(@PathVariable("id") int id) throws Exception {
 
-	  DonationCampModel camp = null;
+	  UserModel user = null;
 	  try {
-		   camp = dcService.getByID(id);
+		   user = userService.getByID(id);
 		
 	}
 	  catch (HibernateObjectRetrievalFailureException e) {
@@ -58,33 +57,33 @@ public class DonationCampController {
 		e.printStackTrace();
 		throw new Exception("Sorry we can not find any donation camp information for you.");
 	}
-	  if(camp == null|camp.getId() == null)
+	  if(user == null|user.getId() == null)
 		  return new ResponseEntity(HttpStatus.NOT_FOUND);	  
-	  return new ResponseEntity<DonationCampModel>(camp, HttpStatus.FOUND);
+	  return new ResponseEntity<UserModel>(user, HttpStatus.FOUND);
     
   }
 
   @RequestMapping(value="/save",method = RequestMethod.POST)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public String create(@RequestBody DonationCampModel camp) {
-      dcService.create(camp);
+  public String create(@RequestBody UserModel user) {
+      userService.create(user);
     return "User succesfully saved!";
   }
   
   @RequestMapping(value="/update/{id}",method = RequestMethod.PATCH)
   @ResponseBody
   @ResponseStatus(HttpStatus.CREATED)
-  public String update(@PathVariable("id") int id,@RequestBody DonationCampModel camp) {
-      dcService.update(id,camp);
+  public String update(@PathVariable("id") int id,@RequestBody UserModel user) {
+      userService.update(id,user);
     return "User succesfully updated!";
   }
   
   @RequestMapping(value="/all")
   @ResponseBody
-  public List<DonationCamp> getAll() {
+  public List<UserModel> getAll() {
 
-      return dcService.getAll();
+      return userService.getAll();
   }
 
 }

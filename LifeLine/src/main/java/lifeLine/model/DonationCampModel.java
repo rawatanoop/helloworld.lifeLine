@@ -7,8 +7,8 @@ public class DonationCampModel {
 	private int userID;
 	private int campCategoryID;
 	private String address;
-	private int startDate;
-	private int endDate;
+	private Date startDate;
+	private Date endDate;
 	private int unit;
 	private int unitLeft;
 	
@@ -36,16 +36,16 @@ public class DonationCampModel {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(int startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	public int getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(int endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	public int getUnit() {
