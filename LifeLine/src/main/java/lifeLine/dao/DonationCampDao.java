@@ -2,8 +2,6 @@ package lifeLine.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import lifeLine.orm.entity.DonationCamp;
 
 @Repository
-@Transactional
-public class DonationCampDao {
+public class DonationCampDao implements IDonationCampDao<DonationCamp>{
   
   @Autowired
   private SessionFactory _sessionFactory;
@@ -24,12 +21,10 @@ public class DonationCampDao {
 
   public void save(DonationCamp camp) {
     getSession().save(camp);
-    return;
   }
   
   public void delete(DonationCamp camp) {
     getSession().delete(camp);
-    return;
   }
   
   @SuppressWarnings("unchecked")
@@ -37,7 +32,6 @@ public class DonationCampDao {
 	  return getSession().createQuery("from DonationCamp").list();
   }
  
-  @Transactional
   public DonationCamp getById(Integer id) {
 	  DonationCamp camp = (DonationCamp) getSession().load(DonationCamp.class, id);
 	  camp.getUnit();

@@ -5,72 +5,73 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import inti.ws.spring.exception.client.BadRequestException;
+import inti.ws.spring.exception.client.NotFoundException;
 import lifeLine.dao.DonationCampDao;
 import lifeLine.model.DonationCampModel;
 import lifeLine.orm.entity.DonationCamp;
 
 @Service
-public class DonationCampService  {
+public class DonationCampService implements IDonationCampService{
 
 	@Autowired
 	private DonationCampDao dcDao;
 
-	public String delete(int id) {
-		try {
-			DonationCamp camp = new DonationCamp(id);
-			dcDao.delete(camp);
-		} catch (Exception ex) {
-			return ex.getMessage();
-		}
-		return "User succesfully deleted!";
-	}
-
-	public String create(DonationCampModel campModel) {
-		try {
-			DonationCamp camp = new DonationCamp(campModel.getId(), campModel.getUserID(),
-					campModel.getCampCategoryID(), campModel.getAddress(), campModel.getStartDate(),
-					campModel.getEndDate(), campModel.getUnit(), campModel.getUnitLeft());
-
-			dcDao.save(camp);
-		} catch (Exception ex) {
-			return ex.getMessage();
-		}
-		return "User succesfully saved!";
-	}
-
-	@Transactional
-	public DonationCampModel getByID(int id) {
-		return getModel(dcDao.getById(id));
+	public void delete(int id) throws BadRequestException {
+		if (isValidID(id))
+			dcDao.delete(new DonationCamp(id));
+		throw new BadRequestException(IService.InvalidID);
 
 	}
 
+	public void create(DonationCampModel campModel) {
+		DonationCamp camp = getEntity(campModel);
+		dcDao.save(camp);
+	}
 
-
-	public List<DonationCampModel> getAll() {
-
-		return getModelList(dcDao.getAll());
+	public DonationCampModel getByID(int id) throws BadRequestException {
+		if (isValidID(id))
+			return getModel(dcDao.getById(id));
+		else
+			throw new BadRequestException(IService.InvalidID);
 
 	}
-	
 
-	public void update(int id, DonationCampModel campModel) {
+	public List<DonationCampModel> getAll() throws NotFoundException {
+		List<DonationCamp> list = dcDao.getAll();
+		if (list == null)
+			throw new NotFoundException(IService.NotFound);
+
+		return getModelList(list);
+
+	}
+
+	public void update(int id, DonationCampModel campModel) throws BadRequestException {
+		if (!isValidID(id))
+			throw new BadRequestException(IService.InvalidID);
 		DonationCamp camp = getEntity(campModel);
 		dcDao.update(id, camp);
-
 	}
-	private List<DonationCampModel> getModelList(List<DonationCamp> entityList){
-	  	List<DonationCampModel> list = new ArrayList<DonationCampModel>();
+
+	private List<DonationCampModel> getModelList(List<DonationCamp> entityList) {
+		List<DonationCampModel> list = new ArrayList<DonationCampModel>();
 		for (Iterator<DonationCamp> iterator = entityList.iterator(); iterator.hasNext();) {
 			list.add(getModel(iterator.next()));
-			
+
 		}
 		return list;
-	  
-  }
+
+	}
+
+	public List<DonationCampModel> getByAddress(String address) throws NotFoundException {
+		List<DonationCamp> list = dcDao.getByAddress(address);
+		if(list==null)
+			throw new NotFoundException(IService.NotFound);
+		return getModelList(dcDao.getByAddress(address));
+	}
+
 	private DonationCampModel getModel(DonationCamp entity) {
 		DonationCampModel model = new DonationCampModel();
 		model.setId(entity.getId());
@@ -91,9 +92,12 @@ public class DonationCampService  {
 		return entity;
 
 	}
-	
-	public List<DonationCampModel> getByAddress(String address) {
-		return getModelList(dcDao.getByAddress(address));
+
+	private boolean isValidID(int id) {
+		if (id > 0)
+			return true;
+		return false;
+
 	}
 
 }

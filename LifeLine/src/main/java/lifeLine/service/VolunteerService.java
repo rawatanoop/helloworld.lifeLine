@@ -4,83 +4,84 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.management.BadAttributeValueExpException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import inti.ws.spring.exception.client.BadRequestException;
 import lifeLine.dao.VolunteerDao;
 import lifeLine.model.VolunteerModel;
 import lifeLine.orm.entity.DonationCampVolunteer;
 import lifeLine.orm.entity.DonationCampVolunteerPK;
 
 @Service
-public class VolunteerService {
+public class VolunteerService implements IVolunteerService {
 
+	@Autowired
+	private VolunteerDao dcVolunteerDao;
 
-	  @Autowired
-	  private VolunteerDao dcVolunteerDao;
-	  
-	  public String delete(int campID) {
-	    try {
-	      DonationCampVolunteer volunteer = new DonationCampVolunteer(new DonationCampVolunteerPK());
-	      dcVolunteerDao.delete(volunteer);
-	    }
-	    catch(Exception ex) {
-	      return ex.getMessage();
-	    }
-	    return "User succesfully deleted!";
-	  }
+	public void delete(int id) throws BadAttributeValueExpException {
+		if (!isVAalidID(id))
+			throw new BadAttributeValueExpException(IService.InvalidID);
 
+		DonationCampVolunteer volunteer = new DonationCampVolunteer(new DonationCampVolunteerPK());
+		dcVolunteerDao.delete(volunteer);
+	}
 
-	  
-	  public String create(VolunteerModel volunteer) {
-  	    			
-	      dcVolunteerDao.save(getEntity(volunteer));
+	public void create(VolunteerModel volunteer) {
 
-	    return "User succesfully saved!";
-	  }
+		dcVolunteerDao.save(getEntity(volunteer));
+	}
 
-	public List<VolunteerModel>  getByUserID(int userID) {
+	public List<VolunteerModel> getByUserID(int id) throws BadRequestException {
+		if (!isVAalidID(id))
+			throw new BadRequestException(IService.InvalidID);
+		return getModelList(dcVolunteerDao.getAllByCampID(id));
+
+	}
+
+	public List<VolunteerModel> getByCampID(int id) throws BadRequestException {
+		if (!isVAalidID(id))
+			throw new BadRequestException(IService.InvalidID);
+		return getModelList(dcVolunteerDao.getAllByCampID(id));
+	}
+
+	public void update(int id, VolunteerModel volunteer) throws BadRequestException {
+		if (!isVAalidID(id))
+			throw new BadRequestException(IService.InvalidID);
+		dcVolunteerDao.update(id, getEntity(volunteer));
+
+	}
+
+	private VolunteerModel getModel(DonationCampVolunteer entity) {
+		VolunteerModel model = new VolunteerModel();
+		model.setUserID(entity.getDonationCampVolenteerPK().getUserID());
+		model.setCampID(entity.getDonationCampVolenteerPK().getCampID());
+		model.setRequestStatus(entity.getRequestStatus());
+		return model;
+
+	}
+
+	private DonationCampVolunteer getEntity(VolunteerModel model) {
+		DonationCampVolunteer entity = new DonationCampVolunteer(
+				new DonationCampVolunteerPK(model.getUserID(), model.getCampID()));
+		entity.setRequestStatus(model.getRequestStatus());
+		return entity;
+	}
+
+	private List<VolunteerModel> getModelList(List<DonationCampVolunteer> entityList) {
 		List<VolunteerModel> list = new ArrayList<VolunteerModel>();
-		List<DonationCampVolunteer> entitylist = dcVolunteerDao.getAllByCampID(userID);
-		for (Iterator iterator = entitylist.iterator(); iterator.hasNext();) {
-			list.add(getModel((DonationCampVolunteer) iterator.next()));
-			
+		for (Iterator<DonationCampVolunteer> iterator = entityList.iterator(); iterator.hasNext();) {
+			list.add(getModel(iterator.next()));
+
 		}
 		return list;
+
 	}
 
-	public List<VolunteerModel> getByCampID(int campID) {		
-		return getModelList(dcVolunteerDao.getAllByCampID(campID));	
-	}
-	
+	private boolean isVAalidID(int id) {
+		return true;
 
-	public void update(int id, VolunteerModel volunteer) {
-		DonationCampVolunteer volunteerEntity = getEntity(volunteer);
-		dcVolunteerDao.update(id,volunteerEntity);
-		
 	}
-	  private VolunteerModel getModel(DonationCampVolunteer entity){
-		  VolunteerModel model = new VolunteerModel();
-		  model.setUserID(entity.getDonationCampVolenteerPK().getUserID());
-		  model.setCampID(entity.getDonationCampVolenteerPK().getCampID());
-		  model.setRequestStatus(entity.getRequestStatus());
-		return model;
-		  
-	  }
-	  
-	  private DonationCampVolunteer getEntity(VolunteerModel model){
-		  DonationCampVolunteer entity = new DonationCampVolunteer(new DonationCampVolunteerPK(model.getUserID(), model.getCampID()));
-		  entity.setRequestStatus(model.getRequestStatus());	  
-			return entity;			  
-		  }
-	  
-	  private List<VolunteerModel> getModelList(List<DonationCampVolunteer> entityList){
-		  	List<VolunteerModel> list = new ArrayList<VolunteerModel>();
-			for (Iterator<DonationCampVolunteer> iterator = entityList.iterator(); iterator.hasNext();) {
-				list.add(getModel(iterator.next()));
-				
-			}
-			return list;
-		  
-	  }
 }

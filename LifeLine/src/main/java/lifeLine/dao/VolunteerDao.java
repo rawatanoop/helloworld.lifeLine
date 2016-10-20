@@ -2,8 +2,6 @@ package lifeLine.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +10,7 @@ import org.springframework.stereotype.Repository;
 import lifeLine.orm.entity.DonationCampVolunteer;
 
 @Repository
-@Transactional
-public class VolunteerDao  {
+public class VolunteerDao implements IVolunteerDao<DonationCampVolunteer> {
 
 	@Autowired
 	private SessionFactory _sessionFactory;
@@ -32,7 +29,6 @@ public class VolunteerDao  {
 		return;
 	}
 
-	@Transactional
 	public DonationCampVolunteer getById(Integer id) {
 		DonationCampVolunteer volunteer = (DonationCampVolunteer) getSession().load(DonationCampVolunteer.class, id);
 		return volunteer;

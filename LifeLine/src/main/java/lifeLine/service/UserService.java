@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import inti.ws.spring.exception.client.BadRequestException;
 import lifeLine.dao.UserDao;
 import lifeLine.model.UserModel;
 import lifeLine.orm.entity.User;
@@ -17,27 +18,30 @@ public class UserService implements IUserService{
 	@Autowired
 	private UserDao userDao;
 
-	public String delete(int campID) {
-		try {
-			User user = new User(campID);
+	public void delete(int id) throws BadRequestException {
+		if(!isValidID(id))
+			throw new BadRequestException(IService.InvalidID);
+		
+			User user = new User(id);
 			userDao.delete(user);
-		} catch (Exception ex) {
-			return ex.getMessage();
-		}
-		return "User succesfully deleted!";
+		
 	}
 
-	public String create(UserModel user) {
+	public void create(UserModel user) {
 		userDao.save(getEntity(user));
-		return "User succesfully saved!";
+		
 	}
 
-	public UserModel getByID(int userID) {
-		return getModel(userDao.getById(userID));
+	public UserModel getByID(int id) throws BadRequestException {
+		if(!isValidID(id))
+			throw new BadRequestException(IService.InvalidID);
+		return getModel(userDao.getById(id));
 
 	}
 
-	public void update(int id, UserModel userModel) {
+	public void update(int id, UserModel userModel) throws BadRequestException {
+		if(!isValidID(id))
+			throw new BadRequestException(IService.InvalidID);
 		User user = getEntity(userModel);
 		userDao.update(id, user);
 	}
@@ -52,6 +56,9 @@ public class UserService implements IUserService{
 		return list;
 	}
 
+	private boolean isValidID(int id){
+		return true;
+	}
 	private UserModel getModel(User entity) {
 		UserModel model = new UserModel();
 		model.setName(entity.getName());

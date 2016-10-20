@@ -2,13 +2,15 @@ package lifeLine.service;
 
 import java.util.List;
 
+import javax.management.BadAttributeValueExpException;
+
 import inti.ws.spring.exception.client.BadRequestException;
 import lifeLine.model.VolunteerModel;
 public interface IVolunteerService {
 
-	public String delete(int campID) throws BadRequestException;
+	public void delete(int campID) throws BadRequestException, BadAttributeValueExpException;
 
-	public String create(VolunteerModel volunteer) throws BadRequestException;
+	public void create(VolunteerModel volunteer) throws BadRequestException;
 
 	public List<VolunteerModel> getByUserID(int userID) throws BadRequestException;
 

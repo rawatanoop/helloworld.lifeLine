@@ -2,9 +2,7 @@ package lifeLine.dao;
 
 import java.util.List;
 
-import lifeLine.orm.entity.DonationCamp;
+public interface IDonationCampDao<DC> extends IDao<DC> {
 
-public interface IDonationCampDao<DC> {
-
-	public List<DonationCamp> getByAddress(String address);
+	public List<DC> getByAddress(String address);
 }

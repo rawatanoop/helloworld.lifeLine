@@ -28,7 +28,12 @@
     	<artifactId>ws-spring-exception</artifactId>
     	<version>1.6</version>
     </dependency>
-    
+
+    <dependency>
+    	<groupId>junit</groupId>
+    	<artifactId>junit</artifactId>
+    	<version>4.1</version>
+    </dependency>
   </dependencies>
   
 
