@@ -19,6 +19,7 @@ import inti.ws.spring.exception.client.BadRequestException;
 import lifeLine.model.DonationCampModel;
 import lifeLine.model.VolunteerModel;
 import lifeLine.service.DonationCampService;
+import lifeLine.service.IVolunteerService;
 import lifeLine.service.VolunteerService;
 
 @Controller
@@ -27,7 +28,7 @@ import lifeLine.service.VolunteerService;
 public class VolunteerController {
 
 	@Autowired
-	private VolunteerService volunteerService;
+	private IVolunteerService volunteerService;
 
 	@Autowired
 	private DonationCampService dcService;
@@ -35,7 +36,7 @@ public class VolunteerController {
 	@RequestMapping(value = "/deregister/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public void delete(@PathVariable("id") int id) throws BadAttributeValueExpException {
+	public void delete(@PathVariable("id") int id) throws BadAttributeValueExpException, BadRequestException {
 		volunteerService.delete(id);
 
 	}
@@ -51,7 +52,7 @@ public class VolunteerController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.CREATED)
-	public void create(@RequestBody VolunteerModel model) {
+	public void create(@RequestBody VolunteerModel model) throws BadRequestException {
 		volunteerService.create(model);
 
 	}

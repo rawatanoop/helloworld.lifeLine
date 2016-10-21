@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import lifeLine.dao.IVolunteerDao;
 import lifeLine.dao.VolunteerDao;
 import lifeLine.model.VolunteerModel;
 import lifeLine.orm.entity.DonationCampVolunteer;
@@ -19,7 +20,7 @@ import lifeLine.orm.entity.DonationCampVolunteerPK;
 public class VolunteerService implements IVolunteerService {
 
 	@Autowired
-	private VolunteerDao dcVolunteerDao;
+	private IVolunteerDao<DonationCampVolunteer> dcVolunteerDao;
 
 	public void delete(int id) throws BadAttributeValueExpException {
 		if (!isVAalidID(id))

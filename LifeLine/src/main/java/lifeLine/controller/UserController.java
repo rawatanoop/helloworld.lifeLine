@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import inti.ws.spring.exception.client.BadRequestException;
 import lifeLine.model.UserModel;
+import lifeLine.service.IUserService;
 import lifeLine.service.UserService;
 
 @Controller
@@ -23,7 +24,7 @@ import lifeLine.service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
+	private IUserService userService;
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody

@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import lifeLine.model.CategoryModel;
-import lifeLine.model.DonationCampModel;
 import lifeLine.service.CategoryService;
+import lifeLine.service.ICategoryService;
 
 @Controller
 @RequestMapping(value = "/category")
@@ -24,10 +24,11 @@ import lifeLine.service.CategoryService;
 public class CategoryController {
 
 	@Autowired
-	private CategoryService categoryService;
+	private ICategoryService categoryService;
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
 	public String delete(@PathVariable("id") int id) {
 		try {
 			categoryService.delete(id);
@@ -39,19 +40,21 @@ public class CategoryController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<CategoryModel> getByCampID(@PathVariable("id") int id) {
 
 		CategoryModel camp = categoryService.getByID(id);
 		return new ResponseEntity<CategoryModel>(camp, HttpStatus.FOUND);
 
 	}
-	
-	@RequestMapping(value="/all")
-	  @ResponseBody
-	  public List<CategoryModel> getAll() {
 
-	      return categoryService.getAll();
-	  }
+	@RequestMapping(value = "/all")
+	@ResponseBody
+	@ResponseStatus(HttpStatus.OK)
+	public List<CategoryModel> getAll() {
+
+		return categoryService.getAll();
+	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	@ResponseBody

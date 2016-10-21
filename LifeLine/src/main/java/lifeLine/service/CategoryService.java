@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lifeLine.dao.CategoryDao;
+import lifeLine.dao.ICategoryDao;
 import lifeLine.model.CategoryModel;
 import lifeLine.orm.entity.DonationCampCategory;
 
@@ -15,7 +16,7 @@ import lifeLine.orm.entity.DonationCampCategory;
 public class CategoryService implements ICategoryService {
 
 	@Autowired
-	private CategoryDao categoryDao;
+	private ICategoryDao<DonationCampCategory> categoryDao;
 
 	public String delete(int campID) {
 		try {

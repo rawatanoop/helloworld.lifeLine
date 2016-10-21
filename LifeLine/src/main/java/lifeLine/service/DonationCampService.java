@@ -10,11 +10,12 @@ import org.springframework.stereotype.Service;
 import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.NotFoundException;
 import lifeLine.dao.DonationCampDao;
+import lifeLine.dao.IDonationCampDao;
 import lifeLine.model.DonationCampModel;
 import lifeLine.orm.entity.DonationCamp;
 
 @Service
-public class DonationCampService implements IDonationCampService{
+public class DonationCampService /*implements IDonationCampService*/{
 
 	@Autowired
 	private DonationCampDao dcDao;
@@ -29,6 +30,8 @@ public class DonationCampService implements IDonationCampService{
 	public void create(DonationCampModel campModel) {
 		DonationCamp camp = getEntity(campModel);
 		dcDao.save(camp);
+		//System.out.println("");
+		int a =0;
 	}
 
 	public DonationCampModel getByID(int id) throws BadRequestException {
@@ -87,8 +90,15 @@ public class DonationCampService implements IDonationCampService{
 	}
 
 	private DonationCamp getEntity(DonationCampModel model) {
-		DonationCamp entity = new DonationCamp(model.getId(), model.getUserID(), model.getCampCategoryID(),
-				model.getAddress(), model.getStartDate(), model.getEndDate(), model.getUnit(), model.getUnitLeft());
+		DonationCamp entity = new DonationCamp();
+		entity.setId(model.getId());
+		entity.setUserID(model.getUserID());
+		entity.setCampCategoryID(model.getCampCategoryID());
+		entity.setStartDate(model.getStartDate());
+		entity.setEndDate(model.getEndDate());
+		entity.setAddress(model.getAddress());
+		entity.setUnit(model.getUnit());
+		entity.setUnitLeft(model.getUnitLeft());
 		return entity;
 
 	}

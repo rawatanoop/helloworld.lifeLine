@@ -38,7 +38,7 @@ public class DonationCampController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public DonationCampModel getByID(@PathVariable("id") int id) throws BadRequestException {
+	public DonationCampModel getByID(@PathVariable("id") int id) throws BadRequestException, NotFoundException {
 
 		return dcService.getByID(id);
 
@@ -61,7 +61,7 @@ public class DonationCampController {
 	@RequestMapping(value = "/all")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public List<DonationCampModel> getAll() throws NotFoundException {
+	public List<DonationCampModel> getAll() throws NotFoundException, BadRequestException {
 		return dcService.getAll();
 	}
 

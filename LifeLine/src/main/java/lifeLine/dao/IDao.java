@@ -3,6 +3,8 @@ package lifeLine.dao;
 import java.util.List;
 
 
+
+
 public interface IDao<Entity> {
 	
 	  public void save(Entity entity) ;

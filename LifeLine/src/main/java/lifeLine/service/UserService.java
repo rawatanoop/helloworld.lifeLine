@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import inti.ws.spring.exception.client.BadRequestException;
+import lifeLine.dao.IUserDao;
 import lifeLine.dao.UserDao;
 import lifeLine.model.UserModel;
 import lifeLine.orm.entity.User;
@@ -16,8 +18,9 @@ import lifeLine.orm.entity.User;
 public class UserService implements IUserService{
 
 	@Autowired
-	private UserDao userDao;
+	private IUserDao<User> userDao;
 
+	
 	public void delete(int id) throws BadRequestException {
 		if(!isValidID(id))
 			throw new BadRequestException(IService.InvalidID);
@@ -27,11 +30,13 @@ public class UserService implements IUserService{
 		
 	}
 
+	
 	public void create(UserModel user) {
 		userDao.save(getEntity(user));
 		
 	}
 
+	
 	public UserModel getByID(int id) throws BadRequestException {
 		if(!isValidID(id))
 			throw new BadRequestException(IService.InvalidID);
@@ -39,6 +44,7 @@ public class UserService implements IUserService{
 
 	}
 
+	
 	public void update(int id, UserModel userModel) throws BadRequestException {
 		if(!isValidID(id))
 			throw new BadRequestException(IService.InvalidID);
@@ -46,6 +52,7 @@ public class UserService implements IUserService{
 		userDao.update(id, user);
 	}
 
+	
 	public List<UserModel> getAll() {
 		List<UserModel> list = new ArrayList<UserModel>();
 		List<User> entitylist = userDao.getAll();

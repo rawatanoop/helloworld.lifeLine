@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import inti.ws.spring.exception.client.BadRequestException;
 import inti.ws.spring.exception.client.NotFoundException;
 import lifeLine.model.DonationCampModel;
 import lifeLine.service.DonationCampService;
@@ -26,14 +27,14 @@ public class SearchController {
 	@RequestMapping(value = "/all")
 	@ResponseBody
 	@ResponseStatus(HttpStatus.OK)
-	public List<DonationCampModel> getAll() throws NotFoundException {
+	public List<DonationCampModel> getAll() throws NotFoundException, BadRequestException {
 
 		return dcService.getAll();
 	}
 
 	@RequestMapping(value = "/address/{address}")
 	@ResponseBody
-	public List<DonationCampModel> getByAddress(@PathVariable("address") String address) throws NotFoundException {
+	public List<DonationCampModel> getByAddress(@PathVariable("address") String address) throws NotFoundException, BadRequestException {
 		return dcService.getByAddress(address);
 	}
 
