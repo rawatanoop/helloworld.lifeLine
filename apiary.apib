@@ -1,0 +1,153 @@
+FORMAT: 1A
+HOST: http://localhost:8080/
+
+# rawatanoop
+
+LifeLine provides a plateform to Donation Camps and Donors to connect each other.
+
+## Donation Camp Add [/donationCamp/save]
+
+### Get Donation Camp by id [POST]
++   Request (application/json)
+
+        [
+        {"id":1,"userID":2,"campCategoryID":2,"address":"2","startDate":0,"endDate":1235000,"unit":23,"unitLeft":7},
+        ]
+
++ Response 400
+
+
+## My Donation Camp List [/donationCamp/user]
+
+### List All Donation Camps created by User[GET]
+
++ Response 200 (application/json)
+
+        [
+        {"id":1,"userID":2,"campCategoryID":2,"address":"TestAddress","startDate":0,"endDate":1235000,"unit":23,"unitLeft":23},
+        {"id":2,"userID":2,"campCategoryID":3,"address":"TestAddress","startDate":0,"endDate":1235000,"unit":23,"unitLeft":23},
+        {"id":3,"userID":2,"campCategoryID":4,"address":"TestAddress","startDate":0,"endDate":1235000,"unit":23,"unitLeft":23},
+        {"id":5,"userID":2,"campCategoryID":5,"address":"TestAddress","startDate":0,"endDate":1235000,"unit":23,"unitLeft":23}
+        ]
+
+        
+## Lists Volunteers for the Camp [/donationCamp/volunteer]
+
+### Get all volunteers for the Camp with capmId and volunteer's requestStatus[GET]
++   Request (application/json)
+
+        [
+        {"campID":2,"requestStatus":"Request"}
+        ]
+
++ Response 200 (application/json)
+
+
+ 
+        
+## Donation Camp Volunteer request [/volunteer/save]
+
+### Saves a volunteer request for the camp [POST]
+
++   Request (application/json)
+
+        [
+        {"campID":2,"requestStatus":"Request","unitDonate":3}
+        ]
+
++ Response 200
+
+        
+## Update the details of a volunteer [/volunteeer/update]
+
+### Update the details of a volunteer [POST]
+
++   Request (application/json)
+
+        [
+        {"userID":1 ,"campID":2,"requestStatus":"Accept","unitDonate":3}
+        ]
+
++ Response 200
+
+## Lists all camps of a volunteer with status "Request" [/volunteer/pendingRequest]
+
+### List All Donation Camps for a Voluneer [GET]
+
++ Response 200 (application/json)
+
+        [
+        {"id":14,"userID":0,"campCategoryID":7,"address":"Kanlyani Nagar","start":null,"end":null,"startDate":19924000,"endDate":20143000,"unit":12,"unitLeft":12,"categoryName":"Tissue","subCategoryName":"Tissue","unitDonate":0}
+        ]
+        
+## Lists all camps of a volunteer with status "Accept" [/volunteer/acceptedRequest]
+
+### List All Donation Camps for a Voluneer [GET]
+
++ Response 200 (application/json)
+
+        [
+        {"id":4,"userID":1,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":19822000,"endDate":30911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":5,"userID":1,"campCategoryID":2,"address":"JP Nagar","start":null,"end":null,"startDate":19822000,"endDate":30911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"B","unitDonate":0},
+        {"id":6,"userID":1,"campCategoryID":5,"address":"JP Nagar","start":null,"end":null,"startDate":22032000,"endDate":1130911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"B+","unitDonate":0},
+        {"id":18,"userID":1,"campCategoryID":9,"address":"Kalyani Nagar","start":null,"end":null,"startDate":19800000,"endDate":19800000,"unit":232,"unitLeft":232,"categoryName":"Platelates","subCategoryName":"B","unitDonate":0},
+        {"id":19,"userID":1,"campCategoryID":9,"address":"BTM Layout","start":null,"end":null,"startDate":19923000,"endDate":19834000,"unit":123,"unitLeft":123,"categoryName":"Platelates","subCategoryName":"B","unitDonate":0}
+        ]
+
+## Lists all camps of a volunteer with status "Reject" [/volunteer/rejectedRequest]
+
+### List All Donation Camps for a Voluneer [GET]
+
++ Response 200 (application/json)
+
+        [
+        {"id":29,"userID":1,"campCategoryID":3,"address":"BTM Layout","start":null,"end":null,"startDate":1478226120000,"endDate":1478969040000,"unit":34,"unitLeft":34,"categoryName":"Blood","subCategoryName":"C","unitDonate":12}
+        ]
+
+## Lists all Donation Camps in an Area [/category/all]
+
+### List Donation Camps in an Area [GET]
+
++ Response 200 (application/json)
+
+        [
+        {"id":1,"category":"Blood","subCategory":"A"},
+        {"id":2,"category":"Blood","subCategory":"B"},
+        {"id":3,"category":"Blood","subCategory":"C"},
+        {"id":4,"category":"Blood","subCategory":"A+"},
+        {"id":5,"category":"Blood","subCategory":"B+"},
+        {"id":6,"category":"Blood","subCategory":"O"},
+        {"id":7,"category":"Tissue","subCategory":"Tissue"},
+        {"id":8,"category":"Platelates","subCategory":"A"},
+        {"id":9,"category":"Platelates","subCategory":"B"}
+        ]
+
+## Lists all Donation Camps in the location and of categoty type [/search/filter]
+
+### List Donation Camps as per filter crieteria [GET]
++   Request (application/json)
+
+        [
+        {"id":4,"userID":1,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":19822000,"endDate":30911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":5,"userID":1,"campCategoryID":2,"address":"JP Nagar","start":null,"end":null,"startDate":19822000,"endDate":30911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"B","unitDonate":0},
+        {"id":6,"userID":1,"campCategoryID":5,"address":"JP Nagar","start":null,"end":null,"startDate":22032000,"endDate":1130911000,"unit":90,"unitLeft":90,"categoryName":"Blood","subCategoryName":"B+","unitDonate":0},
+        {"id":14,"userID":0,"campCategoryID":7,"address":"Kanlyani Nagar","start":null,"end":null,"startDate":19924000,"endDate":20143000,"unit":12,"unitLeft":12,"categoryName":"Tissue","subCategoryName":"Tissue","unitDonate":0},
+        {"id":15,"userID":0,"campCategoryID":7,"address":"Kanlyani Nagar","start":null,"end":null,"startDate":19822000,"endDate":19812000,"unit":23,"unitLeft":23,"categoryName":"Tissue","subCategoryName":"Tissue","unitDonate":0},
+        {"id":16,"userID":0,"campCategoryID":7,"address":"Kanlyani Nagar","start":null,"end":null,"startDate":19832000,"endDate":19923000,"unit":12,"unitLeft":12,"categoryName":"Tissue","subCategoryName":"Tissue","unitDonate":0},
+        {"id":17,"userID":0,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":20034000,"endDate":20124000,"unit":34,"unitLeft":34,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":18,"userID":1,"campCategoryID":9,"address":"Kalyani Nagar","start":null,"end":null,"startDate":19800000,"endDate":19800000,"unit":232,"unitLeft":232,"categoryName":"Platelates","subCategoryName":"B","unitDonate":0},
+        {"id":19,"userID":1,"campCategoryID":9,"address":"BTM Layout","start":null,"end":null,"startDate":19923000,"endDate":19834000,"unit":123,"unitLeft":123,"categoryName":"Platelates","subCategoryName":"B","unitDonate":0},
+        {"id":20,"userID":1,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479859200000,"endDate":1479996180000,"unit":300,"unitLeft":300,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":21,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":22,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":23,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":24,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":25,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":26,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":27,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":28,"userID":9,"campCategoryID":1,"address":"JP Nagar","start":null,"end":null,"startDate":1479949200000,"endDate":1480078860000,"unit":2,"unitLeft":2,"categoryName":"Blood","subCategoryName":"A","unitDonate":0},
+        {"id":29,"userID":1,"campCategoryID":3,"address":"BTM Layout","start":null,"end":null,"startDate":1478226120000,"endDate":1478969040000,"unit":34,"unitLeft":34,"categoryName":"Blood","subCategoryName":"C","unitDonate":0},
+        {"id":30,"userID":9,"campCategoryID":4,"address":"JP Nagar","start":null,"end":null,"startDate":1451610000000,"endDate":1451653200000,"unit":45,"unitLeft":45,"categoryName":"Blood","subCategoryName":"A+","unitDonate":0}
+        anges]
+
++ Response 200 (application/json)
